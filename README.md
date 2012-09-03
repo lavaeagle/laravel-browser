@@ -12,15 +12,24 @@ Example useage: /application/routes.php
     {
 
         /*
-        *   Track visit
+        *   Track a user's visit
         */
+
+        // Create the browser object
         $browser = new Browser;
+
+        // Create the Eloquent object Visit
         $visit = new Visit;
+
+        // Obviously for illegal purposes only
         $visit->location = Locate::get( 'city' ) . ', ' . Locate::get( 'state' ) . ', ' . Locate::get( 'country' );
         $visit->ip_address = Request::ip();
+
         $visit->request = URI::current();
         if( Auth::check() )
             $visit->user_id = Auth::user()->id;
+
+        // Browser stats
         $visit->browser = $browser->getBrowser();
         $visit->browser_version = $browser->getVersion();
         $visit->platform = $browser->getPlatform();
