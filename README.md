@@ -6,7 +6,8 @@ Easy to access and read browser info
 Read the browser class itself for all the info you can get.
 I did not write this class, if you know who did please tell me so I put them in here.
 
-// Example useage: /application/routes.php
+Example useage: /application/routes.php
+
     Route::filter('before', function()
     {
 
