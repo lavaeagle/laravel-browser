@@ -4,9 +4,32 @@ laravel-browser
 Easy to access and read browser info
 
 Read the browser class itself for all the info you can get.
-I did not write this class, if you know who did please tell me so I put them in here.
 
-Example useage: /application/routes.php
+/application/bundles.php
+
+```
+<?php
+return array(
+	'browser' => array('auto'=>true)
+);
+```
+
+/application/bundles/browser/start.php
+
+```
+<?php
+
+Autoloader::map(array(
+	'Browser' => Bundle::path('browser').'browser.php'
+));
+
+Laravel\IoC::singleton('Browser', function()
+{
+	return new Browser($_SERVER['HTTP_USER_AGENT']);
+});
+```
+
+Example usage: /application/routes.php
 
     Route::filter('before', function()
     {
@@ -16,7 +39,8 @@ Example useage: /application/routes.php
         */
 
         // Create the browser object
-        $browser = new Browser;
+		Bundle::start('Browser');
+		$browser = IoC::resolve('Browser');
 
         // Create the Eloquent object Visit
         $visit = new Visit;
@@ -38,3 +62,7 @@ Example useage: /application/routes.php
         $visit->save();
 
     });
+    
+    
+The Browser Class is created by:
+http://chrisschuld.com/projects/browser-php-detecting-a-users-browser-from-php/
