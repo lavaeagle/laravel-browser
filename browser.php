@@ -286,6 +286,14 @@
 			    $this->setMobile(true);
 			    return true;
 		    }
+		    if( stripos($this->_agent,'BB10') !== false ) {
+			    $aresult = explode("/",stristr($this->_agent,"BB10"));
+			    $aversion = explode(' ',$aresult[1]);
+			    $this->setVersion($aversion[0]);
+			    $this->_browser_name = self::BROWSER_BLACKBERRY;
+			    $this->setMobile(true);
+			    return true;
+		    }
 		    return false;
 	    }
 
@@ -888,6 +896,9 @@
 			    $this->_platform = self::PLATFORM_NOKIA;
 		    }
 		    else if( stripos($this->_agent, 'BlackBerry') !== false ) {
+			    $this->_platform = self::PLATFORM_BLACKBERRY;
+		    }
+		    else if( stripos($this->_agent, 'BB10') !== false ) {
 			    $this->_platform = self::PLATFORM_BLACKBERRY;
 		    }
 		    elseif( stripos($this->_agent,'FreeBSD') !== false ) {
